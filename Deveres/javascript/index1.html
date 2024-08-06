@@ -1,0 +1,135 @@
+<script>
+    escolhaAtividade()
+    function escolhaAtividade(){
+        let atividade = parseInt(prompt("digite o numero da atividade de 1 a 10"))
+        switch(atividade){
+            case 1:
+                atividade1();
+            break;
+            case 2:
+                atividade2();
+            break;
+            case 3:
+                atividade3();
+            break;
+            case 4:
+                atividade4();
+            break;
+            case 5:
+                atividade5();
+            break;
+            case 6:
+                atividade6();
+            break;
+            case 7:
+                atividade7();
+            break;
+            case 8:
+                atividade8();
+            break;
+            case 9:
+                atividade9();
+            break;
+            case 10:
+                atividade10();
+            break;
+            default:
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    atividade1()
+    function atividade1(){
+        let A = parseInt(prompt("digite um numero"));
+        let B = parseInt(prompt("digite um numero"));
+        let escolha = prompt("digite um simbolo matematico")
+        let resultado = 0
+
+        switch(escolha){
+            case "+" :
+                 resultado = A + B;
+                alert(resultado)
+            break;
+            case "-" :
+                 resultado = A - B;
+                 alert(resultado)
+            break;
+            case "*" :
+                 resultado = A * B;
+                 alert(resultado)
+            break;
+            case "/" :
+                 resultado = A / B;
+                 alert(resultado)
+            break;
+            default: 
+        }
+        return escolhaAtividade();
+    }
+
+    atividade2()
+    function atividade2(){
+        let isSunny = prompt("e verão?") 
+        let isWeekend = prompt("e fim de semana?")
+
+        if(isSunny == "sim" && isWeekend == "sim"){
+           alert("pode ir para paria")
+        }
+        else{
+            alert("não pode ir para paria")
+        }
+        return escolhaAtividade()
+    }
+    atividade3()
+    function atividade3(){
+        let numero = 0
+        for(numero = 1; numero <= 10; numero++){
+            alert(numero)
+        }
+    }
+    atividade4()
+    function atividade4(){
+        let numero = 0
+        for(numero = 1; numero <= 20; numero++){
+            if(numero%2){
+                numero++
+                alert(numero)
+            }
+        }
+        
+    }
+    atividade5()
+    function atividade5(){
+        
+    }
+    atividade6()
+    function atividade6(){
+        
+    }
+    atividade7()
+    function atividade7(){
+        
+    }
+    atividade8()
+    function atividade8(){
+        
+    }
+    atividade9()
+    function atividade9(){
+        
+    }
+    atividade10()
+    function atividade10(){
+        
+    }
+</script>
