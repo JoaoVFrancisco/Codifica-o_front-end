@@ -103,33 +103,73 @@
         for(numero = 1; numero <= 20; numero++){
             if(numero%2){
                 numero++
-                alert(numero)
+                alert(numero);
             }
         }
-        
+        return escolhaAtividade()
     }
     atividade5()
     function atividade5(){
+        let numero1 = parseInt(prompt("digite um numero"));
+        let numero2 = parseInt(prompt("digite um numero"));
+        let soma = numero1 + numero2
+        alert(soma)
+        return escolhaAtividade()
         
     }
     atividade6()
     function atividade6(){
-        
+        let fatorial = parseInt(prompt("digite um numero para fazermos um fatorial"));
+        let resultado = fatorial
+        for (var i = 1; i < fatorial; i++){
+            resultado *= i
+        }
+        alert(resultado)
     }
     atividade7()
     function atividade7(){
-        
+        for(numb = 1; numb <=100; numb++){
+            if(numb % 3 === 0 || numb % 5 === 0){
+                alert(numb)
+            }
+        }
     }
     atividade8()
     function atividade8(){
-        
+        let anterior = 0;
+        let atual = 1;
+        let proximo = 1
+        for(let i = 0; i <= 10; i++){
+            anterior = atual + proximo;
+            atual = proximo;
+            proximo = anterior;
+            alert(anterior);
+            
+        }
     }
     atividade9()
     function atividade9(){
-        
+        let numeroAleatorio = Math.floor(Math.random() * 10) + 1
+        while(true){
+            let chute = parseInt(prompt("digite um numero ate 10"));
+
+            if(chute < 1 || chute > 10){
+                alert("numero invalido")
+            }
+            else if(chute === numeroAleatorio){
+                alert("voce acertou");
+                break;
+            }
+            else{
+                alert("voce errou")
+            }
+        }
     }
     atividade10()
     function atividade10(){
-        
+        let nome = ["isac", "fort", "ikki", "pedro", "joao"]
+        for(let i = 0; i < nome.length; i++){
+            alert(nome[i]);
+        }
     }
 </script>
