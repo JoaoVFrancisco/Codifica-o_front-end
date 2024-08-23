@@ -1,0 +1,294 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema rpg
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema rpg
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `rpg` DEFAULT CHARACTER SET utf8 ;
+USE `rpg` ;
+
+-- -----------------------------------------------------
+-- Table `rpg`.`classe`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rpg`.`classe` ;
+
+CREATE TABLE IF NOT EXISTS `rpg`.`classe` (
+  `id_classe` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  `habilidade` VARCHAR(255) NOT NULL,
+  `estilo` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id_classe`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rpg`.`Jogador`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rpg`.`Jogador` ;
+
+CREATE TABLE IF NOT EXISTS `rpg`.`Jogador` (
+  `id_Jogador` INT NOT NULL AUTO_INCREMENT,
+  `Nome_Jogador` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id_Jogador`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rpg`.`regiao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rpg`.`regiao` ;
+
+CREATE TABLE IF NOT EXISTS `rpg`.`regiao` (
+  `id_regiao` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  `tipo` VARCHAR(255) NOT NULL,
+  `dificuldade` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id_regiao`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rpg`.`personagem`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rpg`.`personagem` ;
+
+CREATE TABLE IF NOT EXISTS `rpg`.`personagem` (
+  `id_personagem` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  `raca` VARCHAR(255) NOT NULL,
+  `progresso` INT NOT NULL,
+  `afinidade` VARCHAR(255) NOT NULL,
+  `Jogador_id_Jogador` INT NOT NULL,
+  `classe_id_classe` INT NOT NULL,
+  `regiao_id_regiao` INT NOT NULL,
+  `atributo_id_atributo` INT NOT NULL,
+  PRIMARY KEY (`id_personagem`),
+  INDEX `fk_personagem_Jogador1_idx` (`Jogador_id_Jogador` ASC) ,
+  INDEX `fk_personagem_classe1_idx` (`classe_id_classe` ASC) ,
+  INDEX `fk_personagem_regiao1_idx` (`regiao_id_regiao` ASC) ,
+  INDEX `fk_personagem_atributo1_idx` (`atributo_id_atributo` ASC) ,
+  CONSTRAINT `fk_personagem_Jogador1`
+    FOREIGN KEY (`Jogador_id_Jogador`)
+    REFERENCES `rpg`.`Jogador` (`id_Jogador`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_personagem_classe1`
+    FOREIGN KEY (`classe_id_classe`)
+    REFERENCES `rpg`.`classe` (`id_classe`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_personagem_regiao1`
+    FOREIGN KEY (`regiao_id_regiao`)
+    REFERENCES `rpg`.`regiao` (`id_regiao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_personagem_atributo1`
+    FOREIGN KEY (`atributo_id_atributo`)
+    REFERENCES `rpg`.`atributo` (`id_atributo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rpg`.`equipamento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rpg`.`equipamento` ;
+
+CREATE TABLE IF NOT EXISTS `rpg`.`equipamento` (
+  `id_equipamento` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  `categoria` VARCHAR(255) NOT NULL,
+  `personagem_id_personagem` INT NOT NULL,
+  PRIMARY KEY (`id_equipamento`),
+  INDEX `fk_equipamento_personagem1_idx` (`personagem_id_personagem` ASC) ,
+  CONSTRAINT `fk_equipamento_personagem1`
+    FOREIGN KEY (`personagem_id_personagem`)
+    REFERENCES `rpg`.`personagem` (`id_personagem`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rpg`.`inimigo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rpg`.`inimigo` ;
+
+CREATE TABLE IF NOT EXISTS `rpg`.`inimigo` (
+  `id_inimigo` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  `tipo` VARCHAR(255) NOT NULL,
+  `progresso` INT NOT NULL,
+  `equipamento_id_equipamento` INT NOT NULL,
+  PRIMARY KEY (`id_inimigo`),
+  INDEX `fk_inimigo_equipamento1_idx` (`equipamento_id_equipamento` ASC) ,
+  CONSTRAINT `fk_inimigo_equipamento1`
+    FOREIGN KEY (`equipamento_id_equipamento`)
+    REFERENCES `rpg`.`equipamento` (`id_equipamento`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rpg`.`atributo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rpg`.`atributo` ;
+
+CREATE TABLE IF NOT EXISTS `rpg`.`atributo` (
+  `id_atributo` INT NOT NULL AUTO_INCREMENT,
+  `forca` INT NOT NULL,
+  `agilidade` INT NOT NULL,
+  `inteligencia` INT NOT NULL,
+  `vitalidade` INT NOT NULL,
+  `inimigo_id_inimigo` INT NOT NULL,
+  PRIMARY KEY (`id_atributo`),
+  INDEX `fk_atributo_inimigo1_idx` (`inimigo_id_inimigo` ASC) ,
+  CONSTRAINT `fk_atributo_inimigo1`
+    FOREIGN KEY (`inimigo_id_inimigo`)
+    REFERENCES `rpg`.`inimigo` (`id_inimigo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rpg`.`inimigo_has_regiao`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rpg`.`inimigo_has_regiao` ;
+
+CREATE TABLE IF NOT EXISTS `rpg`.`inimigo_has_regiao` (
+  `inimigo_id_inimigo` INT NOT NULL,
+  `regiao_id_regiao` INT NOT NULL,
+  PRIMARY KEY (`inimigo_id_inimigo`, `regiao_id_regiao`),
+  INDEX `fk_inimigo_has_regiao_regiao1_idx` (`regiao_id_regiao` ASC) ,
+  INDEX `fk_inimigo_has_regiao_inimigo1_idx` (`inimigo_id_inimigo` ASC) ,
+  CONSTRAINT `fk_inimigo_has_regiao_inimigo1`
+    FOREIGN KEY (`inimigo_id_inimigo`)
+    REFERENCES `rpg`.`inimigo` (`id_inimigo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_inimigo_has_regiao_regiao1`
+    FOREIGN KEY (`regiao_id_regiao`)
+    REFERENCES `rpg`.`regiao` (`id_regiao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+INSERT INTO classe (nome, habilidade, estilo) VALUES 
+('Guerreiro', 'Força Bruta', 'Corpo a Corpo'),
+('Mago', 'Magia Elemental', 'Mágico'),
+('Arqueiro', 'Precisão', 'Longa Distância'),
+('Ladino', 'Evasão', 'Rápido'),
+('Paladino', 'Defesa Sagrada', 'Tanque'),
+('Necromante', 'Invocação de Mortos', 'Necromântico'),
+('Xamã', 'Magia da Terra', 'Elemental'),
+('Assassino', 'Ataque Silencioso', 'Agile'),
+('Clérigo', 'Cura', 'Suporte'),
+('Bárbaro', 'Fúria', 'Destrutivo');
+
+
+INSERT INTO regiao (nome, tipo, dificuldade) VALUES 
+('Floresta Sombria', 'Floresta', 3),
+('Deserto Ardente', 'Deserto', 5),
+('Montanhas Geladas', 'Montanha', 7),
+('Planícies Verdes', 'Planície', 2),
+('Cavernas Profundas', 'Caverna', 6),
+('Ruínas Antigas', 'Ruínas', 8),
+('Praias Tropicais', 'Praia', 4),
+('Vilas Abandonadas', 'Vilarejo', 3),
+('Campos de Batalha', 'Campo', 5),
+('Selva Densa', 'Selva', 6);
+
+
+INSERT INTO Jogador (Nome_Jogador) VALUES 
+('Arthur'),
+('Lancelot'),
+('Gawain'),
+('Guinevere'),
+('Merlin'),
+('Morgana'),
+('Percival'),
+('Isolde'),
+('Tristan'),
+('Elaine');
+
+
+INSERT INTO atributo (forca, agilidade, inteligencia, vitalidade, inimigo_id_inimigo) VALUES 
+(10, 5, 3, 8, 1),
+(6, 8, 10, 4, 2),
+(7, 7, 7, 7, 3),
+(5, 9, 6, 10, 4),
+(9, 6, 8, 5, 5),
+(4, 5, 12, 7, 6),
+(8, 6, 9, 6, 7),
+(7, 8, 8, 4, 8),
+(5, 7, 11, 9, 9),
+(6, 10, 6, 5, 10);
+
+
+INSERT INTO personagem (nome, raca, progresso, afinidade, regiao_id_regiao, atributo_id_atributo, Jogador_id_Jogador, classe_id_classe) VALUES 
+('Aragorn', 'Humano', 80, 'Leal', 1, 1, 1, 1),
+('Gandalf', 'Mago', 100, 'Sábio', 2, 2, 2, 2),
+('Legolas', 'Elfo', 90, 'Ágil', 3, 3, 3, 3),
+('Frodo', 'Hobbit', 60, 'Destemido', 4, 4, 4, 4),
+('Gimli', 'Anão', 75, 'Valoroso', 5, 5, 5, 5),
+('Arwen', 'Elfo', 85, 'Gentil', 6, 6, 6, 6),
+('Boromir', 'Humano', 70, 'Corajoso', 7, 7, 7, 7),
+('Éowyn', 'Humano', 65, 'Determinado', 8, 8, 8, 8),
+('Gollum', 'Hobbit', 50, 'Desesperado', 9, 9, 9, 9),
+('Saruman', 'Mago', 95, 'Poderoso', 10, 10, 10, 10);
+
+
+INSERT INTO equipamento (nome, categoria, personagem_id_personagem) VALUES 
+('Espada do Rei', 'Espada', 1),
+('Bastão Mágico', 'Cajado', 2),
+('Arco Longo', 'Arco', 3),
+('Anel do Poder', 'Anel', 4),
+('Machado de Guerra', 'Machado', 5),
+('Capa Élfica', 'Capa', 6),
+('Escudo de Boromir', 'Escudo', 7),
+('Espada de Rohan', 'Espada', 8),
+('Garra de Gollum', 'Arma', 9),
+('Cajado de Saruman', 'Cajado', 10);
+
+
+INSERT INTO inimigo (nome, tipo, progresso, equipamento_id_equipamento) VALUES 
+('Orc Guerreiro', 'Orc', 70, 1),
+('Troll das Cavernas', 'Troll', 85, 2),
+('Aranha Gigante', 'Aranha', 60, 3),
+('Dragão Negro', 'Dragão', 100, 4),
+('Lobo das Neves', 'Lobo', 50, 5),
+('Espectro Sombrio', 'Fantasma', 90, 6),
+('Golem de Pedra', 'Golem', 65, 7),
+('Serpente Marinha', 'Serpente', 75, 8),
+('Demônio Flamejante', 'Demônio', 95, 9),
+('Lich das Trevas', 'Lich', 80, 10);
+
+
+INSERT INTO inimigo_has_regiao (inimigo_id_inimigo, regiao_id_regiao) VALUES 
+(1, 1),
+(2, 5),
+(3, 4),
+(4, 7),
+(5, 3),
+(6, 6),
+(7, 2),
+(8, 9),
+(9, 8),
+(10, 10);
