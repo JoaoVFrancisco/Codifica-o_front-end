@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arvore DOM</title>
+    <script>
+        function lerArquivoCSV(arquivo, callback){
+            //o arquivo
+            const leitor = new fileReader();
+            //onload fará o carregamento do arquivo
+            leitor.onload = function(evento){
+                const conteudo = evento.target.result;
+                callback(conteudo);
+            }
+            leitor.readAsText(arquivo)
+        }
+        //definido o nome do arquivo.csv que faremos a leitura
+        const inputArquivo = document.getElementById('arquivoCSV') 
+        addEventListener('change', function(evento){
+            const arquivo = evento.target.files[0]
+            lerArquivoCSV(arquivo, function(conteudo){
+                function converterCSVparaArray(conteudoCSV){
+                    //a função split quebra em vetores o conteudo de acordo com o separador (\n)
+                    const linhas = conteudoCSV.split("\n");
+                    const arreyCVS = [];
+
+                    linhas.forEach(function(linha){
+                        const valores = linha.split(',');
+                        arreyCVS.push(valores);
+                    })
+                    return arreyCVS;
+                }
+            })
+        })
+        arreyCVS.forEach(function(linha){
+            console.log(linha);
+        });
+    </script>
+</head>
+<body>
+    <form>
+        <label>Selecione o arquivo</label>
+        <input type="file" id="arquivoCSV"><br>
+        <input type="submit" onclick="lerArquivoCSV()">
+    </form>
+</body>
+</html>
