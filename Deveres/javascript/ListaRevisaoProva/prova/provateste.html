@@ -1,0 +1,45 @@
+<script>
+class Animal {
+    constructor(tamanho, cor) {
+        this.tamanho = tamanho; 
+        this.cor = cor; 
+    }
+
+    comer() {
+        console.log("O animal está comendo.");
+    }
+}
+
+
+class Cavalo extends Animal {
+    constructor(tamanho, cor, raca) {
+        super(tamanho, cor); 
+        this.raca = raca; 
+    }
+
+    fugir() {
+        console.log("O cavalo está fugindo.");
+    }
+}
+
+
+class Leao extends Animal {
+    constructor(tamanho, cor, juba) {
+        super(tamanho, cor); 
+        this.juba = juba; 
+    }
+
+    cacar() {
+        console.log("O leão está caçando.");
+    }
+}
+
+
+const cavalo = new Cavalo(1.5, "Marrom", "Árabe");
+cavalo.comer(); 
+cavalo.fugir(); 
+
+const leao = new Leao(1.2, "Amarelo", true);
+leao.comer(); 
+leao.cacar(); 
+</script>

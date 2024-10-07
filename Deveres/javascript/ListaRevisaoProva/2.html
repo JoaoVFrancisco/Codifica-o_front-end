@@ -1,0 +1,28 @@
+<script>
+    class forma{
+        
+    }
+    class quadrado extends forma{
+        constructor(lado){
+            super();
+            this.lado = lado
+        } 
+        calcularArea(){
+            return this.lado * 2
+        }
+    }
+    class cartman extends forma{
+        constructor(raio){
+            super();
+            this.raio = raio
+        }
+        calcularArea(){
+            return Math.PI * (this.raio * 2)
+        }
+    }
+
+    const mine = new quadrado(2);
+    const gordo = new cartman(2);
+    console.log("A area do quadrado é: " + mine.calcularArea());
+    console.log("A area do gordo é: " + gordo.calcularArea());
+</script>

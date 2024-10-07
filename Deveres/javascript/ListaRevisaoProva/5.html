@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="lista">
+        <li>Forte</li>
+        <li>Zaneti</li>
+        <li>Salgado</li>
+    </ul>
+    <button onclick="inserir()">Inserir</button>
+    <button onclick="remover()">Remover</button>
+    <script>
+        function inserir(){
+            const element = document.createElement('li')
+            element.textContent = "Novo Elemento"
+
+            const lista = document.getElementsByTagName('ul')
+
+            lista[0].appendChild(element)
+        }
+        function remover(){
+            const  lista = document.getElementById('lista');
+            const ultimoItem = lista.lastElementChild;
+            lista.removeChild(ultimoItem);
+
+        }
+    </script>
+</body>
+</html>
